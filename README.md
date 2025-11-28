@@ -265,26 +265,31 @@ See [LICENSE](./LICENSE) for full terms.
 
 ## 👥 Attribution
 
-**Original Developers**:
-- **Kangwoo Kim** (김강우) - Backend architecture, game logic, server management
-  - Education: Kangnam University, AI Department
-  - Current: KOICA Project Volunteer (3rd Batch), Uganda
-  
-- **Mutabi Jake** - Frontend UI/UX, client-side interaction
+### Original Developer
+- **Kangwoo Kim (Mutabi Jake)**  
+  - Backend: Architecture, game logic, server/network management  
+  - Frontend: UI/UX, client-side interaction  
+  - Affiliation: Kangnam University – AI Department  
+  - Current: KOICA Project Volunteer (Uganda)  
+  - GitHub: https://github.com/applelog  
 
-**Copyright © 2025 Kangwoo Kim**
+---
 
-### Attribution Template
+### Attribution Requirements
 
-When using, modifying, or distributing:
+When using, modifying, or redistributing this software, please include:
 
 ```
 TypeRace Arena
-Original Author: Kangwoo Kim
-Source: https://github.com/kangwoo-kim/typerace-arena
-License: MIT with Attribution
-Copyright © 2025 Kangwoo Kim
+Original Developer: Kangwoo Kim (Mutabi Jake)
+Source: https://github.com/applelog/typerace-arena
+License: MIT License with Attribution
 ```
+---
+
+### Legal Notice
+Copyright © 2025 Kangwoo Kim  
+This project is licensed under the MIT License (with attribution required).
 
 ---
 
