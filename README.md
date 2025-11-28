@@ -267,7 +267,6 @@ See [LICENSE](./LICENSE) for full terms.
 
 **Original Developers**:
 - **Kangwoo Kim** (김강우) - Backend architecture, game logic, server management
-  - GitHub: [@kangwoo-kim](https://github.com/kangwoo-kim)
   - Education: Kangnam University, AI Department
   - Current: KOICA Project Volunteer (3rd Batch), Uganda
   
