@@ -1,0 +1,259 @@
+:root {
+    --bg-color: #f0f0f0;
+    --text-color: #333;
+    --container-bg: #ffffff;
+    --key-bg: #e0e0e0;
+    --key-pressed-bg: #c0c0c0;
+    --correct-color: #4CAF50;
+    --incorrect-color: #F44336;
+    --highlight-color: #0096FF;
+    --cursor-color: #333;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Roboto Mono', monospace; background-color: var(--bg-color); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; overflow-x: hidden;
+}
+.app-container {
+    background-color: var(--container-bg); border-radius: 12px; padding: 30px 40px; width: 100%; max-width: 980px; box-shadow: 0 4px 20px var(--shadow-color); text-align: center;
+}
+.hidden { display: none !important; }
+
+/* --- 대기 화면 & 버튼 --- */
+.start-screen h1 { font-size: 2.5rem; margin-bottom: 10px; }
+.start-screen p { margin-bottom: 20px; color: #777; }
+.start-button { width: 100%; padding: 15px; font-size: 1.2rem; font-weight: bold; background-color: var(--correct-color); color: white; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; margin-top: 20px; margin-bottom: 15px; }
+.start-button:hover { background-color: #45a049; }
+.start-button:disabled { background-color: #9E9E9E; cursor: not-allowed; }
+.sub-buttons-container { display: flex; justify-content: center; gap: 25px; margin-top: 10px; }
+.sub-button { background: none; border: none; color: var(--highlight-color); text-decoration: underline; cursor: pointer; font-size: 0.9rem; padding: 5px; }
+
+/* --- 플레이어 목록 --- */
+#player-list-container { background-color: #f9f9f9; border: 1px solid #eee; border-radius: 8px; padding: 15px 20px; margin-top: 20px; text-align: left; }
+#player-list-container h3 { text-align: center; margin-bottom: 15px; }
+#player-list-container p { text-align: center; margin-bottom: 15px; font-size: 0.9em; color: #555; }
+#player-list { list-style: none; padding: 0; max-height: 150px; overflow-y: auto; }
+.player-item { padding: 8px; border-bottom: 1px solid #eee; }
+.player-item:last-child { border-bottom: none; }
+.host-tag { background-color: var(--highlight-color); color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: bold; }
+
+
+/* --- 타이핑 화면 --- */
+.result { display: flex; justify-content: space-around; margin-bottom: 20px; background-color: var(--bg-color); padding: 15px; border-radius: 8px; }
+.result-item .label { font-size: 0.8rem; color: #777; }
+.result-item .value { font-weight: 500; font-size: 1.5rem; transition: color 0.3s; }
+.quote-display { margin-bottom: 20px; font-size: 1.5rem; letter-spacing: 2px; user-select: none; line-height: 1.8; min-height: 120px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; text-align: center; }
+.quote-display span.word { display: inline-block; white-space: nowrap; }
+.quote-display span { position: relative; }
+.quote-display span.current { border-bottom: 2px solid var(--cursor-color); }
+.quote-display .correct { color: var(--correct-color); }
+.quote-display .incorrect { color: var(--incorrect-color); text-decoration: underline; }
+.quote-input { position: absolute; left: -9999px; opacity: 0; }
+
+/* --- 키보드 레이아웃 --- */
+.keyboard { display: grid; grid-template-columns: repeat(60, 1fr); grid-auto-rows: 50px; gap: 6px; width: 100%; margin-top: 20px; }
+.key { grid-column: span 4; display: flex; justify-content: center; align-items: center; background-color: var(--key-bg); border-radius: 5px; font-size: 1rem; transition: all 0.1s ease; }
+.key.active { background-color: var(--key-pressed-bg); transform: scale(0.95); }
+.key.highlight { background-color: var(--highlight-color); color: white; }
+.key[data-key="Backspace"] { grid-column: span 8; } .key[data-key="Tab"] { grid-column: span 6; } .key[data-key="Backslash"] { grid-column: span 6; } .key[data-key="CapsLock"] { grid-column: span 7; } .key[data-key="Enter"] { grid-column: span 9; } .key[data-key="ShiftLeft"] { grid-column: span 9; } .key[data-key="ShiftRight"] { grid-column: span 11; } .key[data-key="Space"] { grid-column: span 28; } .key[data-key="ControlLeft"], .key[data-key="ControlRight"] { grid-column: span 6; } .key[data-key="AltLeft"], .key[data-key="AltRight"] { grid-column: span 5; } .key[data-key="MetaLeft"], .key[data-key="MetaRight"] { grid-column: span 5; }
+
+/* --- 모달 & 오버레이 --- */
+.modal-overlay, .countdown-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
+.countdown-overlay h1 { font-size: 8rem; color: white; text-shadow: 0 0 20px rgba(0,0,0,0.5); }
+.modal-content { background-color: white; padding: 30px 40px; border-radius: 12px; max-width: 600px; width: 95%; text-align: left; position: relative; max-height: 85vh; overflow-y: auto; }
+.modal-content h2 { margin-bottom: 15px; }
+.modal-content p { color: #555; line-height: 1.7; margin-bottom: 10px; }
+.close-button { position: absolute; top: 15px; right: 20px; font-size: 2rem; background: none; border: none; cursor: pointer; color: #aaa; }
+.result-modal-content { text-align: center; }
+
+/* --- 순위표 --- */
+#leaderboard-container { margin: 25px 0; }
+#leaderboard-table { width: 100%; border-collapse: collapse; }
+#leaderboard-table th, #leaderboard-table td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; }
+#leaderboard-table th { background-color: #f8f8f8; }
+/* 내 순위 강조 스타일 */
+.my-rank { font-weight: bold; background-color: #e3f2fd; }
+
+@media (max-width: 1024px) {
+    .app-container { padding: 20px; }
+    .quote-display { font-size: 1.2rem; }
+    .keyboard { gap: 4px; grid-auto-rows: 40px; }
+    .key { font-size: 0.8rem; }
+}
+
+/* --- 집계 중 오버레이 --- */
+.tallying-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+.tallying-overlay h2 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+.tallying-overlay p {
+    font-size: 1.5rem;
+}
+
+/* --- 관전 모드 스타일 --- */
+#spectator-view {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+#spectator-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+#spectator-table th, #spectator-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+#spectator-table th {
+    font-weight: 500;
+    color: #555;
+}
+
+/* --- 닉네임 변경 UI --- */
+#nickname-container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+#nickname-input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-family: 'Roboto Mono', monospace;
+    width: 250px;
+}
+#change-nickname-button {
+    border: none;
+    background-color: var(--highlight-color);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#change-nickname-button:hover {
+    opacity: 0.9;
+}
+
+/* --- 호스트 관전 UI --- */
+#host-spectate-view {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+#host-spectate-view h3 {
+    margin-bottom: 5px;
+}
+#host-spectate-view p {
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* 호스트 컨트롤 영역 스타일 추가 */
+#host-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+}
+
+#host-timer-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#host-timer-container .label {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+#host-timer {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--highlight-color);
+}
+
+#force-end-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#force-end-button:hover {
+    background-color: #e64a19;
+}
+
+#force-end-button:disabled {
+    background-color: #9E9E9E;
+    cursor: not-allowed;
+}
+
+#spectate-progress-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+.spectate-player-card {
+    background-color: white;
+    border-radius: 6px;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #eee;
+}
+.spectate-player-card .nickname {
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+.spectate-player-card .status {
+    font-size: 0.8em;
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: white;
+}
+.spectate-player-card .status.playing { background-color: #fb8c00; }
+.spectate-player-card .status.finished { background-color: var(--correct-color); }
+.spectate-player-card .progress-bar-bg {
+    background-color: #e0e0e0;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.spectate-player-card .progress-bar {
+    background-color: var(--highlight-color);
+    height: 100%;
+    width: 0%;
+    transition: width 0.2s ease;
+}

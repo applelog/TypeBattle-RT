@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real-Time Typing Race</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<script src="/socket.io/socket.io.js"></script>
+<body>
+
+<div class="app-container">
+    <!-- 대기 화면 -->
+    <div id="start-screen">
+        <h1>Mpigi IT Competition Typing Race</h1>
+        <p>Wait for the host to start the game!</p>
+        <div id="player-list-container">
+            <h3>Connected Players (<span id="user-count">0</span>)</h3>
+            <p>Host: <strong id="host-display">Waiting...</strong></p>
+            <ul id="player-list"></ul>
+        </div>
+        <div id="nickname-container" class="hidden">
+            <input type="text" id="nickname-input" placeholder="Enter your nickname" maxlength="15">
+            <button id="change-nickname-button">Change</button>
+        </div>
+        <button id="start-button" class="start-button hidden">Start Game</button>
+        <div class="sub-buttons-container">
+            <button id="how-to-play-button" class="sub-button">How to Play</button>
+        </div>
+    </div>
+
+    <!-- 타이핑 화면 -->
+    <div id="typing-screen" class="hidden">
+        <!-- 호스트 관전 모드 UI -->
+        <div id="host-spectate-view" class="hidden">
+            <h3>Host Spectating Mode</h3>
+            <p>You are viewing the players' progress.</p>
+            
+            <!-- 호스트 컨트롤 영역 추가 -->
+            <div id="host-controls">
+                <div id="host-timer-container">
+                    <span class="label">Remaining Time:</span>
+                    <span id="host-timer">120s</span>
+                </div>
+                <button id="force-end-button">End Game & Tally Results</button>
+            </div>
+            
+            <div id="spectate-progress-container"></div>
+        </div>
+        <!-- 플레이어 타이핑 UI -->
+        <div id="player-typing-view">
+            <div class="result">
+                <div class="result-item"><div class="label">Time</div><div id="timer" class="value">120s</div></div>
+                <div class="result-item"><div class="label">WPM</div><div id="wpm" class="value">0</div></div>
+                <div class="result-item"><div class="label">Accuracy</div><div id="accuracy" class="value">100%</div></div>
+            </div>
+            <div id="quote-display" class="quote-display"></div>
+            <textarea id="quote-input" class="quote-input" disabled></textarea>
+            <div id="keyboard" class="keyboard"></div>
+        </div>
+    </div>
+
+    <!-- 오버레이 -->
+    <div id="countdown-overlay" class="hidden"><h1 id="countdown-text">10</h1></div>
+    <div id="tallying-overlay" class="hidden"><h2>Time's up!</h2><p>Tallying results...</p></div>
+
+    <!-- 모달 -->
+    <div id="result-modal" class="modal-overlay hidden">
+        <div class="modal-content result-modal-content">
+            <h2 id="result-title">Race Finished!</h2>
+            <div id="leaderboard-container">
+                <h3>Leaderboard</h3>
+                <table id="leaderboard-table">
+                    <thead><tr><th>Rank</th><th>Player</th><th>WPM</th><th>Accuracy</th></tr></thead>
+                    <tbody id="leaderboard-table-body"></tbody>
+                </table>
+            </div>
+            <button id="close-result-modal-button" class="start-button">Back to Lobby</button>
+        </div>
+    </div>
+    <div id="info-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="close-info-modal-button" class="close-button">&times;</button>
+            <h2>How to Play</h2>
+            <p>1. The first person to join becomes the host.</p>
+            <p>2. The host starts the game and spectates. Players type.</p>
+            <p>3. Change your nickname in the lobby before the game starts.</p>
+            <p>4. Finish typing with less than 5 mistakes to submit your score early.</p>
+            <p>5. <strong>Host can end the game early using the "End Game" button.</strong></p>
+            <p><strong>Developer: Kangwoo Kim, Mutabi Jake.</strong></p>
+            <p><strong>Copyright © 2025 Kangwoo Kim.</strong></p>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
