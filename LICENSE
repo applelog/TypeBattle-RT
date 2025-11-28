@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2025 사과농장주인
+Copyright (c) 2025 Kangwoo Kim
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,44 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+--------------------------------------------------------------------------------
+MODIFICATION & ATTRIBUTION POLICY EXTENSION
+--------------------------------------------------------------------------------
+
+If you modify, distribute, or use derivative works of this Software:
+
+1. Attribution Required
+   - Original Author: Kangwoo Kim
+   - Must be included in any redistributed or modified version
+
+2. Modification Disclosure
+   - Modified files MUST include a header comment:
+     - Modifier name
+     - Modification date
+     - Description of changes
+
+3. Source Reference
+   - Include a reference to the original repository:
+     https://github.com/applelog/TypeBattle-RT
+
+4. License Continuity
+   - This license must remain included in derivative distributions
+
+
+--------------------------------------------------------------------------------
+Example Header for Modified Source Files
+--------------------------------------------------------------------------------
+
+/*
+ * TypeBattle RT
+ * Real-time WebSocket-based typing competition platform
+ *
+ * Original: server.py (Kangwoo Kim, 2025)
+ * Source: https://github.com/applelog/TypeBattle-RT
+ *
+ * Modified by: [Your Name]
+ * Modified on: [YYYY-MM-DD]
+ * Changes:
+ *   - [Description of modifications]
+ */
